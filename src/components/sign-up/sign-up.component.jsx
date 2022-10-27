@@ -73,7 +73,7 @@ const SignUp = () => {
         <FormInput
           label="Password"
           inputOptions={{
-            type: "text",
+            type: "password",
             name: "password",
             required: true,
             onChange: handleChange,
@@ -84,7 +84,7 @@ const SignUp = () => {
         <FormInput
           label="Confirm Password"
           inputOptions={{
-            type: "text",
+            type: "password",
             name: "confirmPassword",
             required: true,
             onChange: handleChange,
