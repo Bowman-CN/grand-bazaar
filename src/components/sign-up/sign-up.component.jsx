@@ -3,6 +3,8 @@ import {
   createAuthUserWithSignUpForm,
   createUserDocFromAuth,
 } from "../../utils/firebase/firebase";
+import FormInput from "../form-input/form-input.component";
+import Button from "../button/button.component";
 
 const signUpFormFields = {
   displayName: "",
@@ -46,43 +48,50 @@ const SignUp = () => {
     <div>
       <h1>Sign Up with Your Email and Password.</h1>
       <form onSubmit={handleFormSubmit}>
-        <label htmlFor="display_name">Display Name</label>
-        <input
-          type="text"
-          name="displayName"
-          required
-          onChange={handleChange}
-          value={displayName}
+        <FormInput
+          label="Display Name"
+          inputOptions={{
+            type: "text",
+            name: "displayName",
+            required: true,
+            onChange: handleChange,
+            value: displayName,
+          }}
         />
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          required
-          onChange={handleChange}
-          value={email}
+        <FormInput
+          label="Email"
+          inputOptions={{
+            type: "text",
+            name: "email",
+            required: true,
+            onChange: handleChange,
+            value: email,
+          }}
         />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          required
-          onChange={handleChange}
-          value={password}
+        <FormInput
+          label="Password"
+          inputOptions={{
+            type: "text",
+            name: "password",
+            required: true,
+            onChange: handleChange,
+            value: password,
+          }}
         />
 
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          required
-          onChange={handleChange}
-          value={confirmPassword}
+        <FormInput
+          label="Confirm Password"
+          inputOptions={{
+            type: "text",
+            name: "confirmPassword",
+            required: true,
+            onChange: handleChange,
+            value: confirmPassword,
+          }}
         />
-
-        <button type="submit">SUBMIT for SIGN UP</button>
+        <Button children={"SIGN UP"} />
       </form>
     </div>
   );
