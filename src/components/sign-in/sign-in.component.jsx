@@ -9,7 +9,6 @@ import {
   createUserDocFromAuth,
   signInWithPlainCredentials,
 } from "../../utils/firebase/firebase";
-import { UserContext } from "../../contexts/user.context";
 
 const signInFormFields = {
   email: "",
@@ -19,7 +18,6 @@ const signInFormFields = {
 const SignIn = () => {
   const [formFields, setFormFields] = useState(signInFormFields);
   const { email, password } = formFields;
-  const { setCurrentUser } = useContext(UserContext);
   const nav = useNavigate();
   const handleFieldChange = (event) => {
     setFormFields({ ...formFields, [event.target.name]: event.target.value });
@@ -28,7 +26,6 @@ const SignIn = () => {
     event.preventDefault();
     try {
       const response = await signInWithPlainCredentials(email, password);
-      setCurrentUser(response.user);
       nav("/");
     } catch (error) {
       console.log(error);
@@ -38,8 +35,6 @@ const SignIn = () => {
     const response = await signInGoogleWithPopup();
     console.log(response);
     const { user } = response;
-    setCurrentUser(user);
-    await createUserDocFromAuth(user);
   };
 
   return (

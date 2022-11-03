@@ -10,12 +10,9 @@ const Navigation = () => {
    * will be executed every time when the context value changed
    * BUT rerendering only happens when the context value is being used in component JSX
    */
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   console.log("-from-nav", currentUser);
-  const onSignOut = async () => {
-    await signOutFromFirebase();
-    setCurrentUser(null);
-  };
+
   return (
     <div>
       <div className="navigation">
@@ -27,7 +24,7 @@ const Navigation = () => {
             HOME
           </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={onSignOut}>
+            <span className="nav-link" onClick={signOutFromFirebase}>
               {" "}
               SIGN OUT
             </span>
