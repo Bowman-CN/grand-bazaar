@@ -1,8 +1,21 @@
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as BrandLogo } from "../../assets/crown.svg";
 import "./navigation.style.scss";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/user.context";
+import { signOutFromFirebase } from "../../utils/firebase/firebase";
 
 const Navigation = () => {
+  /**  any components that hooks with context, component JS (function for instance)
+   * will be executed every time when the context value changed
+   * BUT rerendering only happens when the context value is being used in component JSX
+   */
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+  console.log("-from-nav", currentUser);
+  const onSignOut = async () => {
+    await signOutFromFirebase();
+    setCurrentUser(null);
+  };
   return (
     <div>
       <div className="navigation">
@@ -13,9 +26,16 @@ const Navigation = () => {
           <Link className="nav-link" to="/">
             HOME
           </Link>
-          <Link className="nav-link" to="/auth">
-            SIGN IN
-          </Link>
+          {currentUser ? (
+            <span className="nav-link" onClick={onSignOut}>
+              {" "}
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className="nav-link" to="/auth">
+              SIGN IN
+            </Link>
+          )}
         </div>
       </div>
       <div>
