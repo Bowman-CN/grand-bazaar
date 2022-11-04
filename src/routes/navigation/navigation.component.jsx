@@ -3,6 +3,9 @@ import { ReactComponent as BrandLogo } from "../../assets/crown.svg";
 import "./navigation.style.scss";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
+import { ShoppingCartContext } from "../../contexts/shopping-cart.context";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import { signOutFromFirebase } from "../../utils/firebase/firebase";
 
 const Navigation = () => {
@@ -11,7 +14,7 @@ const Navigation = () => {
    * BUT rerendering only happens when the context value is being used in component JSX
    */
   const { currentUser } = useContext(UserContext);
-  console.log("-from-nav", currentUser);
+  const { showDropdown } = useContext(ShoppingCartContext);
 
   return (
     <div>
@@ -25,7 +28,6 @@ const Navigation = () => {
           </Link>
           {currentUser ? (
             <span className="nav-link" onClick={signOutFromFirebase}>
-              {" "}
               SIGN OUT
             </span>
           ) : (
@@ -33,7 +35,9 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
+          <CartIcon />
         </div>
+        {showDropdown && <CartDropdown />}
       </div>
       <div>
         <Outlet />
