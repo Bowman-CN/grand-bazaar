@@ -26,6 +26,9 @@ const Navigation = () => {
           <Link className="nav-link" to="/">
             HOME
           </Link>
+          <Link className="nav-link" to="/shop">
+            SHOP
+          </Link>
           {currentUser ? (
             <span className="nav-link" onClick={signOutFromFirebase}>
               SIGN OUT

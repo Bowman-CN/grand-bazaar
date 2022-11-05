@@ -1,0 +1,14 @@
+.checkout-items-container {
+  width: 900px;
+  margin: 0 auto;
+  .header {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: black 1px solid;
+    padding-bottom: 1em;
+  }
+  p {
+    text-align: center;
+    margin: 2em;
+  }
+}
