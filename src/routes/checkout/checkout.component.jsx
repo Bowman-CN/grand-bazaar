@@ -7,13 +7,13 @@ const Checkout = () => {
   const { cartItems } = useContext(ShoppingCartContext);
   const cartAmout = cartItems.reduce((a, b) => a + b.price * b.quantity, 0);
   return (
-    <div className="checkout-items-container">
-      <div className="header">
-        <span>Product</span>
-        <span>Description</span>
-        <span>Quantity</span>
-        <span>Price</span>
-        <span>Remove</span>
+    <div className="checkout-container">
+      <div className="checkout-header">
+        <div className="header-block">Product</div>
+        <div className="header-block">Description</div>
+        <div className="header-block">Quantity</div>
+        <div className="header-block">Price</div>
+        <div className="header-block">Remove</div>
       </div>
       {cartItems && cartItems.length ? (
         cartItems.map((item) => <CheckoutItem key={item.id} product={item} />)

@@ -11,19 +11,26 @@ const CheckoutItem = ({ product }) => {
   const removeCartItem = () => setItemQuantity(product, 0);
   return (
     <div className="checkout-item-container">
-      <img src={imageUrl} alt={name} />
-      <div>
-        <span>{name}</span>
+      <div className="image-container">
+        <img src={imageUrl} alt={name} />
       </div>
-      <div>
-        <button onClick={() => setItemQUantityByOne(-1)}>{"<"}</button>
-        {quantity}
-        <button onClick={() => setItemQUantityByOne(1)}>{">"}</button>
+      <span className="name">
+       {name}
+      </span>
+      <div className="quantity">
+        <span className="arrow" onClick={() => setItemQUantityByOne(-1)}>
+        &#10094;
+        </span>
+        <span className="value">{quantity}</span>
+        <span className="arrow" onClick={() => setItemQUantityByOne(1)}>
+        &#10095;
+        </span>
       </div>
-      <div>${price}</div>
-      <div>
-        <button onClick={removeCartItem}>X</button>
-      </div>
+      <span className="price">${price}</span>
+
+      <span className="remove-button" onClick={removeCartItem}>
+        &#10005;
+      </span>
     </div>
   );
 };
