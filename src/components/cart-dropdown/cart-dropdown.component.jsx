@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const CartDropdown = () => {
   const { cartItems } = useContext(ShoppingCartContext);
-  console.log("cart has==>", cartItems);
   return (
     <div className="cart-dropdown-container">
       <div className="cart-items">

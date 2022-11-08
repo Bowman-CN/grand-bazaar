@@ -10,7 +10,6 @@ const CategoryDrawer = () => {
   return (
     <>
       {Object.keys(categoryMap).map((categoryName) => {
-        console.log(categoryName);
         return (
           <div key={categoryName} className="category-preview-container">
             <h2>
