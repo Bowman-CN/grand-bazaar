@@ -31,7 +31,7 @@ const Navigation = () => {
           </Link>
           {currentUser ? (
             <span className="nav-link" onClick={signOutFromFirebase}>
-              SIGN OUT
+              SIGN OUT {currentUser.email.toUpperCase()}
             </span>
           ) : (
             <Link className="nav-link" to="/auth">

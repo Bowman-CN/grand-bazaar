@@ -1,4 +1,4 @@
-import "./category.style.scss";
+import { SingleCategoryBody, SingleCategoryTitle } from "./category.style";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { ProductContext } from "../../contexts/product.context";
@@ -8,16 +8,16 @@ const Category = () => {
   const { category } = useParams();
   const { categoryMap } = useContext(ProductContext);
   return (
-    <div>
-      <h2>
-        <span>{category.toUpperCase()}</span>
-        <div>
-          {categoryMap && categoryMap[category].map((item) => {
+    <>
+      <SingleCategoryTitle>{category.toUpperCase()}</SingleCategoryTitle>
+
+      <SingleCategoryBody>
+        {categoryMap &&
+          categoryMap[category].map((item) => {
             return <ProductCard key={item.id} product={item} />;
           })}
-        </div>
-      </h2>
-    </div>
+      </SingleCategoryBody>
+    </>
   );
 };
 

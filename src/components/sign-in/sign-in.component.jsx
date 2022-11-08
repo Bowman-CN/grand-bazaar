@@ -1,6 +1,6 @@
 import "./sign-in.style.scss";
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
+import Button, {BUTTON_TYPE} from "../button/button.component";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -62,7 +62,7 @@ const SignIn = () => {
         />
         <div className="buttons-container">
           <Button>Sign In</Button>
-          <Button buttonType={"google"} onClick={logGoogleUser}>
+          <Button buttonType={BUTTON_TYPE.google} onClick={logGoogleUser}>
             Sign In With Google
           </Button>
         </div>
