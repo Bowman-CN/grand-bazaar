@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const DefaultButton = styled.button`
   min-width: 165px;
-  width: auto;
+  width: 100%;
   height: 50px;
   letter-spacing: 0.5px;
   line-height: 50px;
@@ -11,7 +11,7 @@ export const DefaultButton = styled.button`
   background-color: black;
   color: white;
   text-transform: uppercase;
-  font-family: "Open Sans Condensed";
+  font-family: "Raleway", sans-serif;
   font-weight: bolder;
   border: none;
   cursor: pointer;
