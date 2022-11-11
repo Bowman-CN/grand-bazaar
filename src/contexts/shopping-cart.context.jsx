@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 
 export const ShoppingCartContext = createContext({
   cartItems: null,
@@ -7,6 +7,43 @@ export const ShoppingCartContext = createContext({
   setItemQuantity: () => null,
   setShowDropdown: () => null,
 });
+
+const INITIAL_STATE = {
+  cartItems: null,
+  itemCounts: 0,
+  showDropdown: false,
+};
+
+export const SHOPPING_CART_ACTIONS = {
+  TOGGLE_DROPDOWN_CART: "TOGGLE_DROPDOWN_CART",
+  ADD_ITEM_TO_CART: "ADD_ITEM_TO_CART",
+  UPDATE_ITEM_QUANTITY: "UPDATE_ITEM_QUANTITY",
+};
+
+const shoppingCartReducer = (state, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case SHOPPING_CART_ACTIONS.TOGGLE_DROPDOWN_CART:
+      return {
+        ...state,
+        showDropdown: !state.showDropdown,
+      };
+
+    case SHOPPING_CART_ACTIONS.ADD_ITEM_TO_CART:
+      return {
+        ...state,
+        ...payload,
+      };
+    case SHOPPING_CART_ACTIONS.UPDATE_ITEM_QUANTITY:
+      return {
+        ...state,
+        ...payload,
+      };
+
+    default:
+      throw new Error(`Unhandled action type ${type}`);
+  }
+};
 
 const addToCartHelper = (currentItems, productToadd) => {
   if (currentItems && currentItems.length > 0) {
@@ -22,40 +59,58 @@ const addToCartHelper = (currentItems, productToadd) => {
   return [{ ...productToadd, quantity: 1 }];
 };
 
-const removeItemFromCart = (cartItems, product) => {
-  return cartItems.filter((item) => item.id !== product.id);
-};
 const setItemQuantityHelper = (cartItems, product, targetQuantity) => {
-  return cartItems.map((item) =>
-    item.id === product.id ? { ...item, quantity: targetQuantity } : item
-  );
+  if (targetQuantity < 1) {
+    // remove
+    return cartItems.filter((item) => item.id !== product.id);
+  } else {
+    return cartItems.map((item) =>
+      item.id === product.id ? { ...item, quantity: targetQuantity } : item
+    );
+  }
 };
 
 export const ShopingCartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [{ cartItems, itemCounts, showDropdown }, dispatch] = useReducer(
+    shoppingCartReducer,
+    INITIAL_STATE
+  );
 
   const addToCart = (product) => {
-    const res = addToCartHelper(cartItems, product);
-    setCartItems(res);
+    dispatch({
+      type: SHOPPING_CART_ACTIONS.ADD_ITEM_TO_CART,
+      payload: {
+        cartItems: [...addToCartHelper(cartItems, product)],
+        itemCounts: itemCounts + 1,
+      },
+    });
   };
 
   const setItemQuantity = (product, targetQuantity) => {
-    console.log("quantity -> ", product.quantity, targetQuantity);
-    if (targetQuantity < 1) {
-      // remove
-      setCartItems(removeItemFromCart(cartItems, product));
-    } else {
-      // set
-      setCartItems([
-        ...setItemQuantityHelper(cartItems, product, targetQuantity),
-      ]);
-    }
+    dispatch({
+      type: SHOPPING_CART_ACTIONS.UPDATE_ITEM_QUANTITY,
+      payload: {
+        cartItems: setItemQuantityHelper(cartItems, product, targetQuantity),
+        itemCounts:
+          targetQuantity < 1
+            ? itemCounts - product.quantity
+            : targetQuantity > product.quantity
+            ? itemCounts + (targetQuantity - product.quantity)
+            : itemCounts - (product.quantity - targetQuantity),
+      },
+    });
+  };
+
+  const setShowDropdown = () => {
+    dispatch({
+      type: SHOPPING_CART_ACTIONS.TOGGLE_DROPDOWN_CART,
+    });
   };
 
   const value = {
     cartItems,
     showDropdown,
+    itemCounts,
     setShowDropdown,
     addToCart,
     setItemQuantity,

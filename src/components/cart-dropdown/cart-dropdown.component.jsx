@@ -10,7 +10,7 @@ const CartDropdown = () => {
   return (
     <div className="cart-dropdown-container">
       <div className="cart-items">
-        {cartItems.length ? (
+        {cartItems && cartItems.length ? (
           cartItems.map((item) => <CartItem key={item.id} product={item} />)
         ) : (
           <span className="empty-message">Let's start shopping</span>
